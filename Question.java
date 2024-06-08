@@ -13,6 +13,7 @@ class multiQuestion implements Question {
        this.answers = answers; 
     }
 
+    /* Check whether the vote is correct */
     public Boolean isCorrect(String vote[]){
         if (vote.length != answers.length){
             incorrect++; 
@@ -39,6 +40,7 @@ class multiQuestion implements Question {
         return true;  
     }
 
+    /* Clear the incorrect or correct count */
     public void clearCorrect(Boolean clearCorrect){
         if (clearCorrect){
             correct--; 
@@ -48,6 +50,7 @@ class multiQuestion implements Question {
         incorrect--; 
     }
 
+    /* Print out how many got it correct */
     public void getCorrect(){
         System.out.println("Right: " + correct + "\n" + 
             "Wrong: " + incorrect);
@@ -72,6 +75,7 @@ class singleQuestion implements Question {
         return false; 
     }
 
+    /* Correct the correct or incorrect count */
     public void clearCorrect(Boolean clearCorrect){
         if (clearCorrect){
             correct--; 
@@ -81,6 +85,7 @@ class singleQuestion implements Question {
         incorrect--; 
     }
 
+    /* Print out who got it right or wrong */
     public void getCorrect(){
         System.out.println("1. Right: " + correct + "\n" 
             + "2. Wrong: " + incorrect);

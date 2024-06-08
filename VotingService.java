@@ -20,10 +20,18 @@ class singleChoice extends VotingService {
         votingCount.put("D", 0); 
     }
 
+    /* Vote for student and keep the count for Stats */
     void voting(Student currStudent){
         String id = currStudent.getID();
         if (votingMap.containsKey(id)){
             votingMap.remove(id); 
+
+            /* Clear the correction from the count */
+            Boolean correct = currStudent.getCorrect();
+            question.clearCorrect(correct);
+
+            /* Clear the voting count */
+            votingCount.put(currStudent.getPrev()[0], votingCount.get(currStudent.getPrev()[0]) - 1); 
         }
 
         String singleVote = currStudent.getAnswer()[0];
@@ -40,6 +48,7 @@ class singleChoice extends VotingService {
         votingCount.put(singleVote, 1); 
     }
 
+    /* Print out the results */
     void printResults() {
         votingCount.forEach((key, value) -> {
             System.out.print(key + ": " + value + "\n"); 
@@ -58,6 +67,8 @@ class multiChoice extends VotingService {
         votingCount.put("C", 0); 
         votingCount.put("D", 0); 
     }
+
+    /* Vote for student and keep the count for Stats */
     void voting(Student currStudent){
         String id = currStudent.getID(); 
 
@@ -76,7 +87,7 @@ class multiChoice extends VotingService {
 
         /* Get the current Voting Map */
         votingMap.put(id, currStudent.getAnswer());
-        
+
         /* Check if correct */
         Boolean isCorrect = question.isCorrect(currStudent.getAnswer());
         currStudent.setCorrect(isCorrect);
@@ -90,6 +101,7 @@ class multiChoice extends VotingService {
         }
     }
     
+    /* Print out the results */
     void printResults() {
         votingCount.forEach((key, value) -> {
             System.out.print(key + ": " + value + "\n"); 
