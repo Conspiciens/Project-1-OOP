@@ -1,7 +1,8 @@
 public interface Question {
     public void setAnswers(String answers[]); 
-    public void isCorrect(String vote[]); 
+    public Boolean isCorrect(String vote[]); 
     public void getCorrect(); 
+    public void clearCorrect(Boolean clearCorrect);
 }
 
 class multiQuestion implements Question {
@@ -12,10 +13,10 @@ class multiQuestion implements Question {
        this.answers = answers; 
     }
 
-    public void isCorrect(String vote[]){
+    public Boolean isCorrect(String vote[]){
         if (vote.length != answers.length){
             incorrect++; 
-            return; 
+            return false; 
         }
 
         int correctOption = 0;
@@ -30,11 +31,21 @@ class multiQuestion implements Question {
 
         if (correctOption != answers.length){
             incorrect++;
-            return; 
+            return false; 
         }
 
+
         correct++; 
-        return; 
+        return true;  
+    }
+
+    public void clearCorrect(Boolean clearCorrect){
+        if (clearCorrect){
+            correct--; 
+            return;
+        }
+
+        incorrect--; 
     }
 
     public void getCorrect(){
@@ -52,12 +63,22 @@ class singleQuestion implements Question {
     }
 
     /* Check whether the answer to the question is correct */
-    public void isCorrect(String vote[]){
+    public Boolean isCorrect(String vote[]){
         if (answer == vote[0]){ 
             correct++; 
-            return; 
+            return true; 
         }
         incorrect++; 
+        return false; 
+    }
+
+    public void clearCorrect(Boolean clearCorrect){
+        if (clearCorrect){
+            correct--; 
+            return;
+        }
+
+        incorrect--; 
     }
 
     public void getCorrect(){

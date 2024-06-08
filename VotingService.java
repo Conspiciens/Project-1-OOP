@@ -29,7 +29,8 @@ class singleChoice extends VotingService {
         String singleVote = currStudent.getAnswer()[0];
         
         votingMap.put(id, currStudent.getAnswer()); 
-        question.isCorrect(currStudent.getAnswer());
+        Boolean isCorrect = question.isCorrect(currStudent.getAnswer());
+        currStudent.setCorrect(isCorrect);
 
         /* Manages the voting count for each letter  */
         if (votingCount.containsKey(singleVote)){
@@ -62,11 +63,23 @@ class multiChoice extends VotingService {
 
         if (votingMap.containsKey(id)){
             votingMap.remove(id);
+
+            /* Clear the correction from the count */
+            Boolean correct = currStudent.getCorrect();
+            question.clearCorrect(correct);
+
+            /* Clear the voting count */
+            for (int i = 0; i < currStudent.getPrev().length; i++){
+                votingCount.put(currStudent.getPrev()[i], votingCount.get(currStudent.getPrev()[i]) - 1); 
+            }
         }
 
-
+        /* Get the current Voting Map */
         votingMap.put(id, currStudent.getAnswer());
-        question.isCorrect(currStudent.getAnswer());
+        
+        /* Check if correct */
+        Boolean isCorrect = question.isCorrect(currStudent.getAnswer());
+        currStudent.setCorrect(isCorrect);
 
         for (int i = 0; i < currStudent.getAnswer().length; i++) {
             if (votingCount.containsKey(currStudent.getAnswer()[i])){

@@ -19,6 +19,11 @@ public class SimulationService {
 
         vote.voting(stud3);
         vote.voting(stud4);
+
+        String stud4Ans2[] = {"A"}; 
+        stud4.setAnswer(stud4Ans2);
+
+        vote.voting(stud4);
     
         vote.printResults();
 
